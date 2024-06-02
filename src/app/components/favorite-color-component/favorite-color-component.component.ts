@@ -1,18 +1,18 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {Validators} from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-favorite-color-component',
-  templateUrl: './favorite-color-component.component.html', 
-  imports: [ReactiveFormsModule,NgFor, NgIf],
+  templateUrl: './favorite-color-component.component.html',
+  imports: [ReactiveFormsModule, NgFor, NgIf],
 })
 export class FavoriteColorComponent {
   constructor(private formBuilder: FormBuilder) {}
   profileForm = this.formBuilder.group({
-    firstName: ['', [Validators.required,Validators.minLength(5)]],
+    firstName: ['', [Validators.required, Validators.minLength(5)]],
     lastName: [''],
     address: this.formBuilder.group({
       street: [''],
@@ -21,7 +21,7 @@ export class FavoriteColorComponent {
       zip: [''],
     }),
     aliases: this.formBuilder.array([this.formBuilder.control('')]),
-  })  
+  });
 
   deleteAlias(indexAlias: number) {
     this.aliases.removeAt(indexAlias);
@@ -44,7 +44,7 @@ export class FavoriteColorComponent {
     });
   }
 
-  onSubmit() { 
+  onSubmit() {
     console.warn(this.profileForm.value);
   }
-} 
+}

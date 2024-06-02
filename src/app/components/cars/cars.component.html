@@ -1,18 +1,17 @@
-<div *ngIf="error">{{error}}</div>
-     
-   
-  <form [formGroup]="carForm" (ngSubmit)="insertCar()">
-    <label for="model">Model: </label>
-    <input id="model" type="text" formControlName="model"> 
-    <label for="price">Price: </label>
-    <input id="price" type="number" formControlName="price"> 
-    <button type="submit"  [disabled]="!carForm.valid">Create car</button> 
-  </form>
-   
-  <ul>
-    <li *ngFor="let car of carsArray">
-        {{ car.model }}
-        {{ car.price }}
-        <button (click)="deleteCar(car.id || -1)">Delete</button>
-    </li>
+<div *ngIf="error">{{ error }}</div>
+
+<form [formGroup]="carForm" (ngSubmit)="insertCar()">
+  <label for="model">Model: </label>
+  <input id="model" type="text" formControlName="model" />
+  <label for="price">Price: </label>
+  <input id="price" type="number" formControlName="price" />
+  <button type="submit" [disabled]="!carForm.valid">Create car</button>
+</form>
+
+<ul>
+  <li *ngFor="let car of carsArray">
+    {{ car.model }}
+    {{ car.price }}
+    <button (click)="deleteCar(car.id || -1)">Delete</button>
+  </li>
 </ul>

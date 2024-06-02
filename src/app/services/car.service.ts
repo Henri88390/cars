@@ -3,21 +3,21 @@ import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
 
 import { map } from 'rxjs/operators';
 
-import { Car } from '../models/cars'; 
+import { Car } from '../models/cars';
 import { Observable } from 'rxjs';
 
 type DeleteResponse = {
-  code: number
-}
+  code: number;
+};
 
 type ListResponse = {
-  data?: Car[],
-  error?: number
-}
+  data?: Car[];
+  error?: number;
+};
 
 @Injectable({
-  providedIn: 'root', 
-}) 
+  providedIn: 'root',
+})
 export class CarService {
   baseUrl = 'http://localhost/api';
 
@@ -28,13 +28,16 @@ export class CarService {
   }
 
   delete(idCar: number): Observable<DeleteResponse> {
-    const params = new HttpParams()
-    .set('id', idCar.toString());
-    
-    return this.http.delete<DeleteResponse>(`${this.baseUrl}/delete`, { params: params });
+    const params = new HttpParams().set('id', idCar.toString());
+
+    return this.http.delete<DeleteResponse>(`${this.baseUrl}/delete`, {
+      params: params,
+    });
   }
 
-   insert({model, price}: Car): Observable<Car> {
-   return this.http.post<Car>(`${this.baseUrl}/insert`, { data: { model, price } });
+  insert({ model, price }: Car): Observable<Car> {
+    return this.http.post<Car>(`${this.baseUrl}/insert`, {
+      data: { model, price },
+    });
   }
 }
