@@ -7,14 +7,6 @@
     <label for="price">Price: </label>
     <input id="price" type="number" formControlName="price"> 
     <button type="submit"  [disabled]="!carForm.valid">Create car</button> 
-    <div formArrayName="cars">
-        <ul>
-            <li *ngFor="let car of cars.controls; let i=index" [formGroupName]="i">
-                <input type="text"  formControlName="model">  | <input type="number" formControlName="price"> euros  
-                <button>Delete</button>
-            </li>
-        </ul>
-    </div>
   </form>
    
   <ul>

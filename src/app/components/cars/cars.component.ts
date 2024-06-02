@@ -20,45 +20,31 @@ export class CarsComponent {
         
   carForm = this.formBuilder.group({
     model: ['', Validators.required],
-    price: [null,  Validators.min(1)],
-    cars: this.formBuilder.array([this.formBuilder.group({
-      id: [null as number | null],
-      model: [''],
-      price: [null as number | null]})
-    ]),
+    price: [null,  Validators.min(1)], 
   })  
   
   ngOnInit() {
     this.getCars();
-  }
+  } 
 
-  get cars() {
-    return this.carForm.get('cars') as FormArray;
-  }
-
-  insertCar() { 
+  async insertCar() { 
     this.carService.insert({model: this.carForm.value.model || '', price: this.carForm.value.price || 0})
+      .subscribe(response => this.carsArray.push(response))
   }
 
   deleteCar(idCar: number) {
-    this.carService.delete(idCar)
+    this.carService.delete(idCar).subscribe(response => {if(response.code === 200) {
+      this.carsArray = this.carsArray.filter(car => car.id !== idCar)
+      }
+    }) 
   }
   
   getCars(): void {
-    this.carService.getAll().subscribe(
-      (data: Car[]) => { 
-        this.carsArray = data;
-        data.map(({id, model,price}) =>
-          {
-            this.carForm.value.cars?.push({id, model,price})
-          }
-        )
-        this.success = 'successful retrieval of the list';
-      },
-      (err) => {
-        console.log(err);
-        this.error = err.message;
+    this.carService.getAll().subscribe(response => {
+      if(response.data) {
+        this.carsArray = response.data;
       }
+    }
     );
   }
 }
